@@ -96,11 +96,11 @@ public class ConnectionNode : NetworkNode
 
     public void SetRotation(int aRot, bool aInstant = false)
     {
-        Debug.Log("rotation " + aRot);
+        Debug.Log("rotation " + (aRot*90));
         rotation = aRot;
 
         if (aInstant)
-            transform.rotation = Quaternion.Euler(0, 0, rotation * 90);
+            transform.rotation = Quaternion.Euler(0, 0, aRot * 90);
         else{
 			Hashtable args = new Hashtable(){
 				{"rotation", new Vector3(0, 0, rotation * 90)},
