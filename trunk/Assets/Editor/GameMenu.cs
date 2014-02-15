@@ -72,7 +72,7 @@ public class GameMenu : MonoBehaviour
         return connection.GetComponent<ConnectionNode>();
     }
 
-    [MenuItem("Custom/NextType")]
+    [MenuItem("Custom/NextType #o")]
     static void NextType()
     {
         var game = FindObjectOfType<Game>();
@@ -98,6 +98,19 @@ public class GameMenu : MonoBehaviour
 
         newNode.name = piece.name;
 
+        Selection.activeTransform = newNode.transform;
+
         DestroyImmediate(piece.gameObject);
+    }
+
+    [MenuItem("Custom/Rotate #p")]
+    static void Rotate()
+    {
+        var game = FindObjectOfType<Game>();
+
+        var piece = Selection.activeTransform.gameObject.GetComponent<ConnectionNode>();
+        if (piece == null) return;
+
+        piece.SetRotation((piece.rotation+1) % 4, true);
     }
 }
