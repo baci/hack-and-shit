@@ -67,11 +67,11 @@ public class File : MonoBehaviour
         transform.Translate(delta * Time.deltaTime);
 	}
 
-    public virtual void DestroyJuicy(bool willGivePoints = true)
+    public virtual void DestroyJuicy(bool willGivePoints = true, int numberInRow = 1)
 	{
 		GameObject part;
 		if(willGivePoints){
-			AudioController.instance.PlaySfx(scoreSfx);
+			AudioController.instance.PlaySfx(scoreSfx, 1+(numberInRow-1)*0.2f);
 			if(scoreParticles){
 				part = Instantiate(scoreParticles) as GameObject;
 				part.transform.position = transform.position;

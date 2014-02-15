@@ -4,6 +4,8 @@ using System.Collections;
 public class PlayerCornerNode : NetworkNode {
 
 	private int curFilesInRow = 0;
+	public float cooldownTime;
+
 	public Transform pointsDisplay;
 	public float pointFlyingSpeed;
 	public float pointRotationFactor = 50;
@@ -23,7 +25,6 @@ public class PlayerCornerNode : NetworkNode {
 		else if (aFile.DidPoint == false)
 		{
 			aFile.DidPoint = true;
-			transform.parent.GetComponent<PlayerCorner>().AddScore(1);
 			StartCoroutine(DoPointEffect(aFile));
 		}
     }
@@ -31,6 +32,18 @@ public class PlayerCornerNode : NetworkNode {
 	private IEnumerator DoPointEffect(File file)
 	{
 		curFilesInRow++;
+
+		transform.parent.GetComponent<PlayerCorner>().AddScore(1);
+		if(curFilesInRow > 3)
+		{
+			transform.parent.GetComponent<PlayerCorner>().AddScore(2);
+			iTween.ShakePosition(Game.Instance.gameObject, new Vector3(0.3f,0.3f,0.3f), 1f);
+		}
+		if(curFilesInRow > 5)
+		{
+			transform.parent.GetComponent<PlayerCorner>().AddScore(2);
+			iTween.ShakePosition(Game.Instance.gameObject, new Vector3(0.8f,0.8f,0.8f), 1f);
+		}
 
 		Hashtable ht = new Hashtable();
 		ht.Add("position", pointsDisplay.position);
@@ -43,8 +56,9 @@ public class PlayerCornerNode : NetworkNode {
 		                									pointFlyingSpeed);
 
 		yield return new WaitForSeconds(pointFlyingSpeed);
-		file.DestroyJuicy(); 
+		file.DestroyJuicy(true, curFilesInRow); 
 
+		yield return new WaitForSeconds(2f);
 		curFilesInRow--;
 	}
 }
