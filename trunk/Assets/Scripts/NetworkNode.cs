@@ -20,9 +20,12 @@ public abstract class NetworkNode : MonoBehaviour
 	private void OnGameEnded()
 	{
 		GameTime.Instance.OnGameEnded -= OnGameEnded;
-		GetComponent<Touchable>().onTouchBegin = null;
-		GetComponent<Touchable>().onTouchEnd = null;
-		GetComponent<Touchable>().onTouchMove = null;
+		if(GetComponent<Touchable>())
+		{
+			GetComponent<Touchable>().onTouchBegin = null;
+			GetComponent<Touchable>().onTouchEnd = null;
+			GetComponent<Touchable>().onTouchMove = null;
+		}
 	}
 
     abstract public void RecieveFile(File aFile, NetworkNode aFromNode);
