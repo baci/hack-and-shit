@@ -24,10 +24,13 @@ public class GameTime : MonoBehaviour {
 	}
 
 	void Update(){
-		timePassed += Time.deltaTime;
-		if(timePassed >= totalTime && !endedAlready){
-			endedAlready = true;
-			StartCoroutine(EndGame());
+		if(game.GameState == Game.State.INGAME)
+		{
+			timePassed += Time.deltaTime;
+			if(timePassed >= totalTime && !endedAlready){
+				endedAlready = true;
+				StartCoroutine(EndGame());
+			}
 		}
 
         if (endedAlready && Input.touchCount > 0)
@@ -64,6 +67,6 @@ public class GameTime : MonoBehaviour {
 
 		yield return new WaitForSeconds(3f);
 
-		Game.Instance.ChangeState(Game.State.TITLE);
+		Application.LoadLevel(0);
 	}
 }

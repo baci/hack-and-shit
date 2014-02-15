@@ -17,6 +17,9 @@ public class Game : MonoBehaviour
 	public GameTitleMenu titleMenu;
 	public GameObject winningSprite;
 
+	public FileSender fileSender;
+	public VirusTrigger virusTrigger;
+
 	public enum State
 	{
 		TITLE,
@@ -54,14 +57,18 @@ public class Game : MonoBehaviour
 			titleMenu.gameObject.SetActive(false);
 			if(winningSprite)
 				winningSprite.SetActive(false);
+			fileSender.sendFiles = true;
+			virusTrigger.StartTriggering();
 			break;
 		case State.TITLE:
 			titleMenu.gameObject.SetActive(true);
 			titleMenu.gameObject.renderer.material.color = new Color(1,1,1,1);
 			if(winningSprite)
 				winningSprite.SetActive(false);
+			fileSender.sendFiles = false;
 			break;
 		}
+		state = newState;
 	}
 
 	public int GetWinner(){

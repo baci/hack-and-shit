@@ -10,7 +10,7 @@ public class VirusTrigger : MonoBehaviour {
 
 	private bool running = true;
 
-	private void Start () {
+	public void StartTriggering () {
 		StartCoroutine(DoSpawnViruses());
 
 		GameTime.Instance.OnGameEnded += OnGameEnded;
