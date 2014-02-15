@@ -13,6 +13,7 @@ public class ConnectionNode : NetworkNode
     {
         GetComponent<Touchable>().onTouchBegin += OnTouchBegin;
         GetComponent<Touchable>().onTouchMove += OnTouchMove;
+        GetComponent<Touchable>().onTouchEnd += OnTouchEnd;
 	}
 	
 	// Update is called once per frame
@@ -91,47 +92,50 @@ public class ConnectionNode : NetworkNode
     {
         Debug.Log("rotation " + rotation);
         rotation = aRot;
-        transform.rotation = Quaternion.Euler(0, 0, rotation * 90);
+        iTween.RotateTo(gameObject, new Vector3(0,0,rotation * 90), 0.3f);
     }
 
     Vector3 touchPoint;
     void OnTouchBegin(Touch aTouch, Vector3 aHitPos)
     {
-        //var pos = (Camera.main.ScreenToWorldPoint(aTouch.position));
-        //pos.z = 0;
-        //touchPoint = pos;
-
-        //int newRot = rotation + 1;
-        //if (newRot > 3) newRot = 0;
-        //SetRotation(newRot);
-
         var pos = (Camera.main.ScreenToWorldPoint(aTouch.position));
         pos.z = 0;
+        touchPoint = pos;
 
-        Vector3 prevRel = transform.right;
-        Vector3 newRel = Vector3.up;
-        float angle = Vector3.Angle(newRel, prevRel);
-
-        Debug.Log("Delta: " + angle);
-
-        transform.Rotate(new Vector3(0, 0, angle));
-
-        touchPoint = aTouch.position;
+        int newRot = rotation + 1;
+        if (newRot > 3) newRot = 0;
+        SetRotation(newRot);
     }
 
     void OnTouchMove(Touch aTouch)
     {
-        var pos = (Camera.main.ScreenToWorldPoint(aTouch.position));
-        pos.z = 0;
+        //var pos = (Camera.main.ScreenToWorldPoint(aTouch.position));
+        //pos.z = 0;
 
-        Vector3 prevRel = touchPoint - transform.position;
-        Vector3 newRel = pos - transform.position;
-        float angle = Vector3.Angle(newRel, prevRel);
+        //Vector3 prevRel = touchPoint - transform.position;
+        //Vector3 newRel = pos - transform.position;
+        //float angle = Vector3.Angle(prevRel, newRel);
 
-        Debug.Log("Delta: " + angle);
+        ////Debug.Log("Delta: " + angle);
 
-        transform.Rotate(new Vector3(0, 0, angle));
+        //transform.Rotate(new Vector3(0, 0, angle));
 
-        touchPoint = aTouch.position;
+        //touchPoint = aTouch.position;
+    }
+
+    void OnTouchEnd(Touch aTouch)
+    {
+        //var pos = (Camera.main.ScreenToWorldPoint(aTouch.position));
+        //pos.z = 0;
+
+        //Vector3 prevRel = touchPoint - transform.position;
+        //Vector3 newRel = pos - transform.position;
+        //float angle = Vector3.Angle(newRel, prevRel);
+
+        //Debug.Log("Delta: " + angle);
+
+        ////transform.Rotate(new Vector3(0, 0, angle));
+
+        ////touchPoint = aTouch.position;
     }
 }
