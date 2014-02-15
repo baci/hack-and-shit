@@ -26,8 +26,9 @@ public class AudioController : MonoBehaviour {
 		sfxSource = gameObject.AddComponent<AudioSource>();
 	}
 
-	public void PlaySfx(AudioClip clip){
+	public void PlaySfx(AudioClip clip, float pitch = 1f){
 		if(clip == null) return;
+		sfxSource.pitch = pitch;
 		sfxSource.PlayOneShot(clip);
 	}
 
