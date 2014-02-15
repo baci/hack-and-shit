@@ -19,4 +19,9 @@ public class PlayerCorner : MonoBehaviour
     {
         Game.Instance.playerScores[playerIndex] += aScore;
     }
+
+	public void RemoveScore(int aScore)
+	{
+		Game.Instance.playerScores[playerIndex] -= Mathf.Min(Game.Instance.playerScores[playerIndex], aScore);
+	}
 }

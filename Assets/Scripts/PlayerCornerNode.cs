@@ -19,7 +19,11 @@ public class PlayerCornerNode : NetworkNode {
 
     override public void HandleFile(File aFile, NetworkNode aFromNode)
     {
-        Destroy(aFile.gameObject);
-        transform.parent.GetComponent<PlayerCorner>().AddScore(1);
+        if(aFile is Virus)
+			transform.parent.GetComponent<PlayerCorner>().RemoveScore(10);
+		else
+			transform.parent.GetComponent<PlayerCorner>().AddScore(1);
+
+		Destroy(aFile.gameObject);        
     }
 }
