@@ -70,11 +70,15 @@ public class ConnectionNode : NetworkNode
             HandleFile_Straight(aFile, aFromNode);
     }
 
-    public void SetRotation(int aRot)
+    public void SetRotation(int aRot, bool aInstant = false)
     {
         Debug.Log("rotation " + rotation);
         rotation = aRot;
-        iTween.RotateTo(gameObject, new Vector3(0,0,rotation * 90), 0.3f);
+
+        if (aInstant)
+            transform.rotation = Quaternion.Euler(0, 0, rotation * 90);
+        else
+            iTween.RotateTo(gameObject, new Vector3(0, 0, rotation * 90), 0.3f);
     }
 
     Vector3 touchPoint;
@@ -173,12 +177,12 @@ public class ConnectionNode : NetworkNode
 
     private bool PassThrough_Straight(File aFile, NetworkNode aFromNode)
     {
-        if ((rotation == 0 || rotation == 2) && aFromNode != connections[(int)ConnectionDir.left] &&
-            aFromNode != connections[(int)ConnectionDir.right])
+        if ((rotation == 0 || rotation == 2) && (aFromNode == connections[(int)ConnectionDir.left] ||
+            aFromNode == connections[(int)ConnectionDir.right]))
             return false;
 
-        else if ((rotation == 1 || rotation == 3) && aFromNode != connections[(int)ConnectionDir.up] &&
-            aFromNode != connections[(int)ConnectionDir.down])
+        else if ((rotation == 1 || rotation == 3) && (aFromNode == connections[(int)ConnectionDir.up] ||
+            aFromNode == connections[(int)ConnectionDir.down]))
             return false;
 
         return true;
