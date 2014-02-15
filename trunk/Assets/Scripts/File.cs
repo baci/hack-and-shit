@@ -10,6 +10,11 @@ public class File : MonoBehaviour
 	protected float timeSinceCreated = 0f;
 	protected NetworkNode curNode;
 	protected static float largestTimeSinceCreated = 0f;
+	
+	public AudioClip scoreSfx;
+	public AudioClip destroySfx;
+	public GameObject scoreParticles;
+	public GameObject destroyParticles;
 
 
 	protected virtual void Start () 
@@ -21,13 +26,17 @@ public class File : MonoBehaviour
 	protected virtual void OnDestroy(){
 		GameTime.Instance.OnGameEnded -= OnGameEnded;
 	}
+
+	//this exists so the update is overriden with no issues
+	//needed for endgame effect
+	protected virtual void LateUpdate(){
+		timeSinceCreated += Time.deltaTime;
+		if(timeSinceCreated > largestTimeSinceCreated) largestTimeSinceCreated = timeSinceCreated;
+	}
 	
 	protected virtual void Update () 
     {
-		timeSinceCreated += Time.deltaTime;
-		if(timeSinceCreated > largestTimeSinceCreated) largestTimeSinceCreated = timeSinceCreated;
-
-        if (Target == null) return;
+		 if (Target == null) return;
         Vector3 delta = Target.transform.position-transform.position;
 
         if (delta.magnitude < 1)
@@ -46,8 +55,24 @@ public class File : MonoBehaviour
         transform.Translate(delta * Time.deltaTime);
 	}
 
-    public virtual void DestroyJuicy()
-    {
+    public virtual void DestroyJuicy(bool willGivePoints = true)
+	{
+		GameObject part;
+		if(willGivePoints){
+			AudioController.instance.PlaySfx(scoreSfx);
+			if(scoreParticles){
+				part = Instantiate(scoreParticles) as GameObject;
+				part.transform.position = transform.position;
+				Destroy(part, 5f);
+			}
+		} else {
+			AudioController.instance.PlaySfx(destroySfx);
+			if(destroyParticles){
+				part = Instantiate(destroyParticles) as GameObject;
+				part.transform.position = transform.position;
+				Destroy(part, 5f);
+			}
+		}
         Destroy(gameObject);
     }
 

@@ -61,7 +61,7 @@ public class ConnectionNode : NetworkNode
             passThrough = PassThrough_Fork(aFile, aFromNode);
 
         if (!passThrough)
-            aFile.DestroyJuicy();
+            aFile.DestroyJuicy(false);
     }
 
     override public void HandleFile(File aFile, NetworkNode aFromNode)
