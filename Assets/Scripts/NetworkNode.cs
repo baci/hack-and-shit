@@ -12,13 +12,17 @@ public abstract class NetworkNode : MonoBehaviour
     }
 
 	// Use this for initialization
-	void Start () 
+	protected virtual void Start () 
     {
+		GameTime.Instance.OnGameEnded += OnGameEnded;
 	}
 	
-	// Update is called once per frame
-	void Update () 
-    {
+	private void OnGameEnded()
+	{
+		GameTime.Instance.OnGameEnded -= OnGameEnded;
+		GetComponent<Touchable>().onTouchBegin = null;
+		GetComponent<Touchable>().onTouchEnd = null;
+		GetComponent<Touchable>().onTouchMove = null;
 	}
 
     abstract public void RecieveFile(File aFile, NetworkNode aFromNode);
