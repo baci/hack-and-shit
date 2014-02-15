@@ -6,6 +6,8 @@ public class File : MonoBehaviour
     public NetworkNode Target { get; set; }
     public Vector3 TargetDeathPos { get; set; }
 
+	public bool DidPoint { get; set; }
+
     protected NetworkNode mPrevNode;
 
 	protected float timeSinceCreated = 0f;
