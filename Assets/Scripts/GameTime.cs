@@ -12,6 +12,7 @@ public class GameTime : MonoBehaviour {
 	public float timePassed;
 
 	public float totalFileDestroyTime = 1f;
+	private bool endedAlready = false;
 
 	void Awake(){
 		Instance = this;
@@ -24,7 +25,8 @@ public class GameTime : MonoBehaviour {
 
 	void Update(){
 		timePassed += Time.deltaTime;
-		if(timePassed >= totalTime){
+		if(timePassed >= totalTime && !endedAlready){
+			endedAlready = true;
 			StartCoroutine(EndGame());
 		}
 	}
