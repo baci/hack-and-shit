@@ -210,6 +210,13 @@ public class ConnectionNode : NetworkNode
             if (aFromNode == connections[(int)ConnectionDir.left]) aFile.Target = connections[(int)ConnectionDir.right];
             else aFile.Target = connections[(int)ConnectionDir.left];
         }
+
+		if(aFile is Virus && (aFile as Virus).DirectionReversed)
+		{
+			NetworkNode tmp = aFile.Target;
+			aFile.Target = aFromNode;
+			aFromNode = tmp;
+		}
     }
 
     private bool PassThrough_Fork(File aFile, NetworkNode aFromNode)
