@@ -29,7 +29,7 @@ public class Game : MonoBehaviour
 	// Use this for initialization
 	void Awake () {
         Instance = this;
-		state = State.TITLE;
+		ChangeState(State.TITLE);
 	}
 	
 	// Update is called once per frame
@@ -57,6 +57,7 @@ public class Game : MonoBehaviour
 			break;
 		case State.TITLE:
 			titleMenu.gameObject.SetActive(true);
+			titleMenu.gameObject.renderer.material.color = new Color(1,1,1,1);
 			if(winningSprite)
 				winningSprite.SetActive(false);
 			break;

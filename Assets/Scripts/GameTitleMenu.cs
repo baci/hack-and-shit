@@ -11,7 +11,6 @@ public class GameTitleMenu : MonoBehaviour
 
 	private void OnTouchDown(Touch aTouch, Vector3 aHitPos)
 	{
-		GetComponent<Touchable>().onTouchBegin -= OnTouchDown;
 		StartCoroutine(DoFadeout());
 	}
 
