@@ -6,6 +6,13 @@ public class Virus : File
 	private bool directionReversed = false;
 	public bool DirectionReversed { get {return directionReversed;} }
 
+	protected override void Start ()
+	{
+		base.Start ();
+
+		GameTime.Instance.OnGameEnded += OnGameEnded;
+	}
+
 	protected override void Update ()
 	{
 		base.Update ();
@@ -19,9 +26,15 @@ public class Virus : File
 		}
 	}
 
+	private void OnGameEnded()
+	{
+		DestroyJuicyVirus();
+	}
+
 	public void DestroyJuicyVirus()
 	{
 		// destroy for realzz
+		GameTime.Instance.OnGameEnded -= OnGameEnded;
 		Destroy(gameObject);
 	}
 
