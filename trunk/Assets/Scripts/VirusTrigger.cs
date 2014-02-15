@@ -3,7 +3,7 @@ using System.Collections;
 
 public class VirusTrigger : MonoBehaviour {
 
-	public Virus virusPrefab;
+	public GameObject virusPrefab;
 
 	public float spawnInterval;
 	public float rndSpawnIntervalFactor;
