@@ -10,7 +10,7 @@ public class Virus : File
 	{
 		base.Start ();
 
-		GameTime.Instance.OnGameEnded += OnGameEnded;
+		GameTime.Instance.OnGameEnded += OnVirusGameEnded;
 	}
 
 	protected override void Update ()
@@ -26,7 +26,7 @@ public class Virus : File
 		}
 	}
 
-	private void OnGameEnded()
+	private void OnVirusGameEnded()
 	{
 		DestroyJuicyVirus();
 	}
@@ -34,7 +34,7 @@ public class Virus : File
 	public void DestroyJuicyVirus()
 	{
 		// destroy for realzz
-		GameTime.Instance.OnGameEnded -= OnGameEnded;
+		GameTime.Instance.OnGameEnded -= OnVirusGameEnded;
 		Destroy(gameObject);
 	}
 
