@@ -29,6 +29,18 @@ public class GameTime : MonoBehaviour {
 			endedAlready = true;
 			StartCoroutine(EndGame());
 		}
+
+        if (endedAlready && Input.touchCount > 0)
+        {
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                if (Input.GetTouch(i).phase == TouchPhase.Began)
+                {
+                    Application.LoadLevel(0);
+                    return;
+                }
+            }
+        }
 	}
 
 	public float GetTimePercentage(){
@@ -40,6 +52,9 @@ public class GameTime : MonoBehaviour {
 		int bestPlayer = game.GetWinner();
 
 		if(OnGameEnded != null) OnGameEnded();
+
+        iTween.CameraFadeAdd();
+        iTween.CameraFadeTo(0.4f, totalFileDestroyTime*0.5f);
 
 		yield return new WaitForSeconds(totalFileDestroyTime);
 

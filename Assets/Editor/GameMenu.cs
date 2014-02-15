@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class GameMenu : MonoBehaviour 
 {
@@ -99,6 +100,47 @@ public class GameMenu : MonoBehaviour
         newNode.name = piece.name;
 
         Selection.activeTransform = newNode.transform;
+        
+        int removeIndex = -1;
+        if (piece.GetComponent<SynchronousNode>() != null)
+        {
+            var syncNode = newNode.AddComponent<SynchronousNode>();
+            syncNode.otherNodes = new List<SynchronousNode>();
+            foreach (var connection in piece.GetComponent<SynchronousNode>().otherNodes)
+            {
+                syncNode.otherNodes.Add(connection);
+                for (int i = 0; i < connection.GetComponent<SynchronousNode>().otherNodes.Count; i++)
+                {
+                    if (connection.GetComponent<SynchronousNode>().otherNodes[i] == piece.GetComponent<SynchronousNode>())
+                    {
+                        removeIndex = i;
+                        break;
+                    }
+                }
+
+                if (removeIndex >= 0)
+                {
+                    connection.GetComponent<SynchronousNode>().otherNodes.RemoveAt(removeIndex);
+                    connection.GetComponent<SynchronousNode>().otherNodes.Add(syncNode);
+                }
+            }
+        }
+
+        removeIndex = -1;
+        var fileSender = FindObjectOfType<FileSender>();
+        for (int i = 0; i < fileSender.connections.Count; i++)
+        {
+            if (fileSender.connections[i] == piece)
+            {
+                removeIndex = i;
+                break;
+            }
+        }
+        if (removeIndex >= 0)
+        {
+            fileSender.connections.RemoveAt(removeIndex);
+            fileSender.connections.Add(newNode.GetComponent<ConnectionNode>());
+        }
 
         DestroyImmediate(piece.gameObject);
     }
