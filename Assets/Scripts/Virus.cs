@@ -38,7 +38,7 @@ public class Virus : File
 		Destroy(gameObject);
 	}
 
-	public override void DestroyJuicy()
+	public override void DestroyJuicy(bool willGivePoints = true)
 	{
 		// virus cries: NO!!!
 		// I'm just gonna do a juicy direction change here huehuehue
