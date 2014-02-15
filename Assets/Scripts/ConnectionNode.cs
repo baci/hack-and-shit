@@ -157,9 +157,9 @@ public class ConnectionNode : NetworkNode
         switch (rotation)
         {
             case 0:
-                if (aFromNode == connections[(int)ConnectionDir.right]) aFile.Target = connections[(int)ConnectionDir.down];
+				if (aFromNode == connections[(int)ConnectionDir.right]) aFile.Target = connections[(int)ConnectionDir.down];
                 else aFile.Target = connections[(int)ConnectionDir.right];
-                break;
+				break;
             case 1:
                 if (aFromNode == connections[(int)ConnectionDir.down]) aFile.Target = connections[(int)ConnectionDir.left];
                 else aFile.Target = connections[(int)ConnectionDir.down];
@@ -173,6 +173,12 @@ public class ConnectionNode : NetworkNode
                 else aFile.Target = connections[(int)ConnectionDir.up];
                 break;
         }
+		if(aFile is Virus && (aFile as Virus).DirectionReversed)
+		{
+			NetworkNode tmp = aFile.Target;
+			aFile.Target = aFromNode;
+			aFromNode = tmp;
+		}
     }
 
     private bool PassThrough_Straight(File aFile, NetworkNode aFromNode)

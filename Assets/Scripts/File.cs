@@ -5,13 +5,16 @@ public class File : MonoBehaviour
 {
     public NetworkNode Target { get; set; }
 
-    private NetworkNode mPrevNode;
+    protected NetworkNode mPrevNode;
 
 	protected float timeSinceCreated = 0f;
+	protected NetworkNode curNode;
 	protected static float largestTimeSinceCreated = 0f;
+
 
 	protected virtual void Start () 
     {
+	
 		GameTime.Instance.OnGameEnded += OnGameEnded;
 	}
 
