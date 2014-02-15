@@ -7,14 +7,12 @@ public class File : MonoBehaviour
 
     private NetworkNode mPrevNode;
 
-	// Use this for initialization
-	void Start () 
+	protected virtual void Start () 
     {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () 
+	protected virtual void Update () 
     {
         if (Target == null) return;
         Vector3 delta = Target.transform.position-transform.position;
@@ -35,7 +33,7 @@ public class File : MonoBehaviour
         transform.Translate(delta * Time.deltaTime);
 	}
 
-    public void DestroyJuicy()
+    public virtual void DestroyJuicy()
     {
         Destroy(gameObject);
     }
