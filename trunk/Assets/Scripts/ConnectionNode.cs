@@ -96,7 +96,7 @@ public class ConnectionNode : NetworkNode
     }
 
     Vector3 touchPoint;
-    void OnTouchBegin(Touch aTouch, Vector3 aHitPos)
+    public void OnTouchBegin(Touch aTouch, Vector3 aHitPos)
     {
         var pos = (Camera.main.ScreenToWorldPoint(aTouch.position));
         pos.z = 0;
@@ -107,7 +107,7 @@ public class ConnectionNode : NetworkNode
         SetRotation(newRot);
     }
 
-    void OnTouchMove(Touch aTouch)
+    public void OnTouchMove(Touch aTouch)
     {
         //var pos = (Camera.main.ScreenToWorldPoint(aTouch.position));
         //pos.z = 0;
@@ -123,7 +123,7 @@ public class ConnectionNode : NetworkNode
         //touchPoint = aTouch.position;
     }
 
-    void OnTouchEnd(Touch aTouch)
+    public void OnTouchEnd(Touch aTouch)
     {
         //var pos = (Camera.main.ScreenToWorldPoint(aTouch.position));
         //pos.z = 0;
