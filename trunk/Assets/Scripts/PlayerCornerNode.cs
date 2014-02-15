@@ -37,12 +37,12 @@ public class PlayerCornerNode : NetworkNode {
 		if(curFilesInRow > 3)
 		{
 			transform.parent.GetComponent<PlayerCorner>().AddScore(2);
-			iTween.ShakePosition(Game.Instance.gameObject, new Vector3(0.3f,0.3f,0.3f), 1f);
+			iTween.ShakePosition(Game.Instance.gameObject, new Vector3(0.15f,0.15f,0.15f), 1f);
 		}
 		if(curFilesInRow > 5)
 		{
 			transform.parent.GetComponent<PlayerCorner>().AddScore(2);
-			iTween.ShakePosition(Game.Instance.gameObject, new Vector3(0.8f,0.8f,0.8f), 1f);
+			iTween.ShakePosition(Game.Instance.gameObject, new Vector3(0.7f,0.7f,0.7f), 1f);
 		}
 
 		Hashtable ht = new Hashtable();
