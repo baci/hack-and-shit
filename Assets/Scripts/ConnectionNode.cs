@@ -101,8 +101,15 @@ public class ConnectionNode : NetworkNode
 
         if (aInstant)
             transform.rotation = Quaternion.Euler(0, 0, rotation * 90);
-        else
+        else{
             iTween.RotateTo(gameObject, new Vector3(0, 0, rotation * 90), 0.3f);
+			iTween.ScaleTo(gameObject, Vector3.one*1.2f, 0.15f);
+			Hashtable args = new Hashtable();//{"scale": Vector3.one, "time":0.15f, "delay":0.15f};
+			args.Add("scale", Vector3.one);
+			args.Add("time", 0.15f);
+			args.Add("delay", 0.15f);
+			iTween.ScaleTo(gameObject, args);
+		}
     }
 
     Vector3 touchPoint;
