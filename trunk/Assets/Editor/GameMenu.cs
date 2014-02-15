@@ -71,4 +71,33 @@ public class GameMenu : MonoBehaviour
         if (connection == null) return null;
         return connection.GetComponent<ConnectionNode>();
     }
+
+    [MenuItem("Custom/NextType")]
+    static void NextType()
+    {
+        var game = FindObjectOfType<Game>();
+
+        var piece = Selection.activeTransform.gameObject.GetComponent<ConnectionNode>();
+        if (piece == null) return;
+
+        GameObject nodePrefab;
+        if (piece.type == ConnectionNode.ConnectionNodeType.corner)
+            nodePrefab = game.straightPrefab;
+        else if (piece.type == ConnectionNode.ConnectionNodeType.straight)
+            nodePrefab = game.forkPrefab;
+        else
+            nodePrefab = game.corner90prefab;
+
+        Debug.Log("Type " + piece.type);
+
+        var newNode = PrefabUtility.InstantiatePrefab(nodePrefab) as GameObject;
+        newNode.transform.parent = game.transform;
+        newNode.transform.position = piece.transform.position;
+
+        newNode.GetComponent<ConnectionNode>().SetRotation(piece.rotation, true);
+
+        newNode.name = piece.name;
+
+        DestroyImmediate(piece.gameObject);
+    }
 }
