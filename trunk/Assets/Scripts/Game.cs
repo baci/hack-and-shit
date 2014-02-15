@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
 
     public GameObject corner90prefab;
     public GameObject straightPrefab;
+    public GameObject forkPrefab;
 
 	// Use this for initialization
 	void Awake () {
