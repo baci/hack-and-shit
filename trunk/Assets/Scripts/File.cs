@@ -4,6 +4,7 @@ using System.Collections;
 public class File : MonoBehaviour 
 {
     public NetworkNode Target { get; set; }
+    public Vector3 TargetDeathPos { get; set; }
 
     protected NetworkNode mPrevNode;
 
@@ -36,8 +37,17 @@ public class File : MonoBehaviour
 	
 	protected virtual void Update () 
     {
-		 if (Target == null) return;
-        Vector3 delta = Target.transform.position-transform.position;
+        Vector3 delta;
+        if (Target == null)
+        {
+            delta = TargetDeathPos - transform.position;
+            if (delta.magnitude < Time.deltaTime)
+                DestroyJuicy();
+            transform.Translate(delta * Time.deltaTime);
+            return;
+        }
+
+        delta = Target.transform.position-transform.position;
 
         if (delta.magnitude < 1)
         {
