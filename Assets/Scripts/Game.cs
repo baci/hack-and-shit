@@ -11,6 +11,7 @@ public class Game : MonoBehaviour
     public Vector2 BoardSize = new Vector2(9, 5);
 
     public GameObject corner90prefab;
+    public GameObject straightPrefab;
 
 	// Use this for initialization
 	void Awake () {
