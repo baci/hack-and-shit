@@ -18,8 +18,9 @@ public class PlayerCornerNode : NetworkNode {
 			transform.parent.GetComponent<PlayerCorner>().RemoveScore(10);
 			(aFile as Virus).DestroyJuicyVirus();
 		}
-		else
+		else if (aFile.DidPoint == false)
 		{
+			aFile.DidPoint = true;
 			transform.parent.GetComponent<PlayerCorner>().AddScore(1);
 			StartCoroutine(DoPointEffect(aFile));
 		}
