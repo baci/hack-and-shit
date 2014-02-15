@@ -19,7 +19,7 @@ public class GameTitleMenu : MonoBehaviour
 	{
 		iTween.ColorTo(gameObject, new Color(1,1,1,0), 0.5f);
 		yield return new WaitForSeconds(0.5f);
-		Game.Instance.state = Game.State.INGAME;
+		Game.Instance.ChangeState(Game.State.INGAME);
 		gameObject.SetActive(false);
 	}
 }

@@ -58,6 +58,12 @@ public class GameTime : MonoBehaviour {
 
 		yield return new WaitForSeconds(totalFileDestroyTime);
 
+		Game.Instance.ChangeState(Game.State.ENDGAME);
+
 		print ("Player " + bestPlayer + " won!");
+
+		yield return new WaitForSeconds(3f);
+
+		Game.Instance.ChangeState(Game.State.TITLE);
 	}
 }
