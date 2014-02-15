@@ -22,6 +22,14 @@ public class TouchHandler : MonoBehaviour
                 if (touchIds.ContainsKey(i))
                     touchIds[i].OnTouchMove(Input.GetTouch(i));
                 continue;
+            } 
+            
+            if (Input.GetTouch(i).phase == TouchPhase.Ended)
+            {
+                if (!touchIds.ContainsKey(i)) continue;
+
+                touchIds[i].OnTouchEnd(Input.GetTouch(i));
+                touchIds.Remove(i);
             }
 
             Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
@@ -35,11 +43,6 @@ public class TouchHandler : MonoBehaviour
                     {
                         touchIds[i] = touchable;
                         touchable.OnTouchDown(Input.GetTouch(i), info.point);
-                    }
-                    else if (Input.GetTouch(i).phase == TouchPhase.Ended)
-                    {
-                        touchIds.Remove(i);
-                        touchable.OnTouchEnd(Input.GetTouch(i));
                     }
                 }
             }
