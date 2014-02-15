@@ -17,9 +17,11 @@ public class ConnectionNode : NetworkNode
     public int rotation = 0;
 
 	// Use this for initialization
-	void Start () 
+	protected override void Start () 
     {
-        GetComponent<Touchable>().onTouchBegin += OnTouchBegin;
+		base.Start();
+
+		GetComponent<Touchable>().onTouchBegin += OnTouchBegin;
         GetComponent<Touchable>().onTouchMove += OnTouchMove;
         GetComponent<Touchable>().onTouchEnd += OnTouchEnd;
 	}
