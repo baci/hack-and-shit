@@ -8,13 +8,17 @@ public class VirusTrigger : MonoBehaviour {
 	public float spawnInterval;
 	public float rndSpawnIntervalFactor;
 
+	private bool running = true;
+
 	private void Start () {
 		StartCoroutine(DoSpawnViruses());
+
+		GameTime.Instance.OnGameEnded += OnGameEnded;
 	}
 	
 	private IEnumerator DoSpawnViruses()
 	{
-		while(true)
+		while(running)
 		{
 			yield return new WaitForSeconds(Random.Range(spawnInterval/rndSpawnIntervalFactor, 
 			                                             spawnInterval*rndSpawnIntervalFactor));
@@ -24,5 +28,10 @@ public class VirusTrigger : MonoBehaviour {
 			                                                 GetComponent<FileSender>().connections.Count)];
 			file.transform.position = transform.position;
 		}
+	}
+
+	private void OnGameEnded()
+	{
+		running = false;
 	}
 }
