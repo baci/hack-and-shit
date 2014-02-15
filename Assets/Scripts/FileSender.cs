@@ -10,15 +10,27 @@ public class FileSender : MonoBehaviour
 
     float mFileSendTime = 1.0f;
 
+	public bool sendFiles = true; 
+
 	// Use this for initialization
 	void Start () 
     {
-	
+		GameTime.Instance.OnGameEnded += OnGameEnded;
+	}
+
+	void OnDestroy(){
+		GameTime.Instance.OnGameEnded -= OnGameEnded;
+	}
+
+	void OnGameEnded(){
+		sendFiles = false;
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
+		if(!sendFiles) return;
+
         mFileSendTime -= Time.deltaTime;
 
         if (mFileSendTime <= 0)
