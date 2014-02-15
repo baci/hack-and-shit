@@ -87,6 +87,6 @@ public class File : MonoBehaviour
 
 		yield return new WaitForSeconds(t);
 
-		DestroyJuicy();
+		DestroyJuicy(false);
 	}
 }
