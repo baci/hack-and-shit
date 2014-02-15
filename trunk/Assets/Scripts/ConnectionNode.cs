@@ -2,10 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ConnectionNode : NetworkNode 
+public class ConnectionNode : NetworkNode
 {
+    public enum ConnectionNodeType
+    {
+        corner,
+        straight,
+        fork,
+    }
+
     public List<NetworkNode> connections = null;
 
+    public ConnectionNodeType type;
     public int rotation = 0;
 
 	// Use this for initialization
@@ -44,48 +52,22 @@ public class ConnectionNode : NetworkNode
 
     override public void RecieveFile(File aFile, NetworkNode aFromNode)
     {
-        bool bDestroy = false;
-        if (rotation == 0 && aFromNode != connections[(int)ConnectionDir.right] && 
-            aFromNode != connections[(int)ConnectionDir.down])
-            bDestroy = true;
+        bool passThrough = false;
+        if (type == ConnectionNodeType.corner)
+            passThrough = PassThrough_Corner(aFile, aFromNode);
+        else if (type == ConnectionNodeType.straight)
+            passThrough = PassThrough_Straight(aFile, aFromNode);
 
-        else if (rotation == 1 && aFromNode != connections[(int)ConnectionDir.left] && 
-            aFromNode != connections[(int)ConnectionDir.down])
-            bDestroy = true;
-
-        else if (rotation == 2 && aFromNode != connections[(int)ConnectionDir.left] &&
-            aFromNode != connections[(int)ConnectionDir.up])
-            bDestroy = true;
-
-        else if (rotation == 3 && aFromNode != connections[(int)ConnectionDir.right] &&
-            aFromNode != connections[(int)ConnectionDir.up])
-            bDestroy = true;
-
-        if (bDestroy)
+        if (!passThrough)
             aFile.DestroyJuicy();
     }
 
     override public void HandleFile(File aFile, NetworkNode aFromNode)
     {
-        switch (rotation)
-        {
-            case 0:
-                if (aFromNode == connections[(int)ConnectionDir.right]) aFile.Target = connections[(int)ConnectionDir.down];
-                else aFile.Target = connections[(int)ConnectionDir.right];
-                break;
-            case 1:
-                if (aFromNode == connections[(int)ConnectionDir.down]) aFile.Target = connections[(int)ConnectionDir.left];
-                else aFile.Target = connections[(int)ConnectionDir.down];
-                break;
-            case 2:
-                if (aFromNode == connections[(int)ConnectionDir.left]) aFile.Target = connections[(int)ConnectionDir.up];
-                else aFile.Target = connections[(int)ConnectionDir.left];
-                break;
-            case 3:
-                if (aFromNode == connections[(int)ConnectionDir.up]) aFile.Target = connections[(int)ConnectionDir.right];
-                else aFile.Target = connections[(int)ConnectionDir.up];
-                break;
-        }
+        if (type == ConnectionNodeType.corner)
+           HandleFile_Corner(aFile, aFromNode);
+        else if (type == ConnectionNodeType.straight)
+            HandleFile_Straight(aFile, aFromNode);
     }
 
     public void SetRotation(int aRot)
@@ -137,5 +119,82 @@ public class ConnectionNode : NetworkNode
         ////transform.Rotate(new Vector3(0, 0, angle));
 
         ////touchPoint = aTouch.position;
+    }
+
+    // -----------------------------
+    ///////////////////////////////
+    // SHAPES
+    ///////////////////////////////
+    // -----------------------------
+
+    private bool PassThrough_Corner(File aFile, NetworkNode aFromNode)
+    {
+        if (rotation == 0 && aFromNode != connections[(int)ConnectionDir.right] &&
+            aFromNode != connections[(int)ConnectionDir.down])
+            return false;
+
+        else if (rotation == 1 && aFromNode != connections[(int)ConnectionDir.left] &&
+            aFromNode != connections[(int)ConnectionDir.down])
+            return false;
+
+        else if (rotation == 2 && aFromNode != connections[(int)ConnectionDir.left] &&
+            aFromNode != connections[(int)ConnectionDir.up])
+            return false;
+
+        else if (rotation == 3 && aFromNode != connections[(int)ConnectionDir.right] &&
+            aFromNode != connections[(int)ConnectionDir.up])
+            return false;
+
+        return true;
+    }
+
+    private void HandleFile_Corner(File aFile, NetworkNode aFromNode)
+    {
+        switch (rotation)
+        {
+            case 0:
+                if (aFromNode == connections[(int)ConnectionDir.right]) aFile.Target = connections[(int)ConnectionDir.down];
+                else aFile.Target = connections[(int)ConnectionDir.right];
+                break;
+            case 1:
+                if (aFromNode == connections[(int)ConnectionDir.down]) aFile.Target = connections[(int)ConnectionDir.left];
+                else aFile.Target = connections[(int)ConnectionDir.down];
+                break;
+            case 2:
+                if (aFromNode == connections[(int)ConnectionDir.left]) aFile.Target = connections[(int)ConnectionDir.up];
+                else aFile.Target = connections[(int)ConnectionDir.left];
+                break;
+            case 3:
+                if (aFromNode == connections[(int)ConnectionDir.up]) aFile.Target = connections[(int)ConnectionDir.right];
+                else aFile.Target = connections[(int)ConnectionDir.up];
+                break;
+        }
+    }
+
+    private bool PassThrough_Straight(File aFile, NetworkNode aFromNode)
+    {
+        if ((rotation == 0 || rotation == 2) && aFromNode != connections[(int)ConnectionDir.left] &&
+            aFromNode != connections[(int)ConnectionDir.right])
+            return false;
+
+        else if ((rotation == 1 || rotation == 3) && aFromNode != connections[(int)ConnectionDir.up] &&
+            aFromNode != connections[(int)ConnectionDir.down])
+            return false;
+
+        return true;
+    }
+
+    private void HandleFile_Straight(File aFile, NetworkNode aFromNode)
+    {
+        if (rotation == 0 || rotation == 2)
+        {
+            if (aFromNode == connections[(int)ConnectionDir.up]) aFile.Target = connections[(int)ConnectionDir.down];
+            else aFile.Target = connections[(int)ConnectionDir.up];
+        }
+        else
+        {
+            if (aFromNode == connections[(int)ConnectionDir.left]) aFile.Target = connections[(int)ConnectionDir.right];
+            else aFile.Target = connections[(int)ConnectionDir.left];
+        }
     }
 }
