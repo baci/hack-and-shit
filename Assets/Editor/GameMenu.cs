@@ -9,6 +9,7 @@ public class GameMenu : MonoBehaviour
         var game = Selection.activeTransform.gameObject.GetComponent<Game>();
         var cornerPiece = game.corner90prefab;
         var straightPiece = game.straightPrefab;
+        var forkPiece = game.forkPrefab;
 
         Vector2 boardSize = game.BoardSize;
         Vector2 topCorner = new Vector2(-(boardSize.x - 1) * 0.5f, -(boardSize.y - 1) * 0.5f);
@@ -24,7 +25,12 @@ public class GameMenu : MonoBehaviour
                 if (y == (int)topCorner.y && Mathf.Abs(x) > boardSize.x * 0.5 - 2) continue;
                 if (y == topCorner.y + boardSize.y - 1 && Mathf.Abs(x) > boardSize.x * 0.5 - 2) continue;
 
-                var newNode = PrefabUtility.InstantiatePrefab(Random.Range(0, 4)==0 ? straightPiece : cornerPiece) as GameObject;
+                GameObject nodePrefab;
+                int rand = Random.Range(0, 5);
+                if (rand == 0) nodePrefab = straightPiece;
+                else if (rand == 1) nodePrefab = forkPiece;
+                else nodePrefab = cornerPiece;
+                var newNode = PrefabUtility.InstantiatePrefab(nodePrefab) as GameObject;
                 newNode.transform.parent = game.transform;
                 newNode.transform.position = new Vector3(x * 2, y * 2, 0);
 
