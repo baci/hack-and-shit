@@ -7,13 +7,23 @@ public class File : MonoBehaviour
 
     private NetworkNode mPrevNode;
 
+	protected float timeSinceCreated = 0f;
+	protected static float largestTimeSinceCreated = 0f;
+
 	protected virtual void Start () 
     {
-	
+		GameTime.Instance.OnGameEnded += OnGameEnded;
+	}
+
+	protected virtual void OnDestroy(){
+		GameTime.Instance.OnGameEnded -= OnGameEnded;
 	}
 	
 	protected virtual void Update () 
     {
+		timeSinceCreated += Time.deltaTime;
+		if(timeSinceCreated > largestTimeSinceCreated) largestTimeSinceCreated = timeSinceCreated;
+
         if (Target == null) return;
         Vector3 delta = Target.transform.position-transform.position;
 
@@ -37,4 +47,18 @@ public class File : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+	public void OnGameEnded(){
+
+		StartCoroutine(EndGameRoutine());
+	}
+
+	public IEnumerator EndGameRoutine(){
+		float t = GameTime.Instance.totalFileDestroyTime;
+		t = (timeSinceCreated/largestTimeSinceCreated) * t;
+
+		yield return new WaitForSeconds(t);
+
+		DestroyJuicy();
+	}
 }
