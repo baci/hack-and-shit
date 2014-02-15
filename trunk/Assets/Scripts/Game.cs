@@ -26,4 +26,19 @@ public class Game : MonoBehaviour
         playerScoreText[2].text = "" + playerScores[2];
         playerScoreText[3].text = "" + playerScores[3];
 	}
+
+	public int GetWinner(){
+		int result = 0;
+		int best = -1;
+		for(int i = 0; i < playerScores.Length; i++){
+			if(playerScores[i]> result){
+				best = i;
+				result = playerScores[i];
+			} else if (playerScores[i] == result) {
+				best = -1;
+			}
+		}
+
+		return best;
+	}
 }
