@@ -14,9 +14,18 @@ public class Game : MonoBehaviour
     public GameObject straightPrefab;
     public GameObject forkPrefab;
 
+	public enum State
+	{
+		TITLE,
+		INGAME,
+		ENDGAME
+	}
+	public State state;
+
 	// Use this for initialization
 	void Awake () {
         Instance = this;
+		state = State.TITLE;
 	}
 	
 	// Update is called once per frame
