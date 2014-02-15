@@ -14,13 +14,17 @@ public class Game : MonoBehaviour
     public GameObject straightPrefab;
     public GameObject forkPrefab;
 
+	public GameTitleMenu titleMenu;
+	public GameObject winningSprite;
+
 	public enum State
 	{
 		TITLE,
 		INGAME,
 		ENDGAME
 	}
-	public State state;
+	private State state;
+	public State GameState {get{return state;}}
 
 	// Use this for initialization
 	void Awake () {
@@ -35,6 +39,28 @@ public class Game : MonoBehaviour
         playerScoreText[1].text = "" + playerScores[1];
         playerScoreText[2].text = "" + playerScores[2];
         playerScoreText[3].text = "" + playerScores[3];
+	}
+
+	public void ChangeState(State newState)
+	{
+		switch(newState)
+		{
+		case State.ENDGAME:
+			titleMenu.gameObject.SetActive(false);
+			if(winningSprite)
+				winningSprite.SetActive(true);
+			break;
+		case State.INGAME:
+			titleMenu.gameObject.SetActive(false);
+			if(winningSprite)
+				winningSprite.SetActive(false);
+			break;
+		case State.TITLE:
+			titleMenu.gameObject.SetActive(true);
+			if(winningSprite)
+				winningSprite.SetActive(false);
+			break;
+		}
 	}
 
 	public int GetWinner(){

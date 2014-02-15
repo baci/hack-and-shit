@@ -58,7 +58,7 @@ public class PlayerCornerNode : NetworkNode {
 		yield return new WaitForSeconds(pointFlyingSpeed);
 		file.DestroyJuicy(true, curFilesInRow); 
 
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(3f);
 		curFilesInRow--;
 	}
 }
