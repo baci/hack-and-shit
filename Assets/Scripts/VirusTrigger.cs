@@ -33,5 +33,6 @@ public class VirusTrigger : MonoBehaviour {
 	private void OnGameEnded()
 	{
 		running = false;
+		StopAllCoroutines();
 	}
 }
