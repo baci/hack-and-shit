@@ -30,7 +30,11 @@ public class PlayerCornerNode : NetworkNode {
 	{
 		curFilesInRow++;
 
-		iTween.MoveTo(file.gameObject, pointsDisplay.position, pointFlyingSpeed);
+		Hashtable ht = new Hashtable();
+		ht.Add("position", pointsDisplay.position);
+		ht.Add("time", pointFlyingSpeed);
+		ht.Add("EaseType", "easeInQuad");
+		iTween.MoveTo(file.gameObject, ht);
 		yield return new WaitForSeconds(pointFlyingSpeed);
 		file.DestroyJuicy(); 
 
