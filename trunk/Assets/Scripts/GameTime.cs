@@ -63,7 +63,7 @@ public class GameTime : MonoBehaviour {
 
 		AudioController.instance.PlaySfx(endGame);
 
-		int bestScore = Game.Instance.playerScores[bestPlayer];
+		int bestScore = ((bestPlayer>=0)?Game.Instance.playerScores[bestPlayer]:-1);
 
 		switch(bestPlayer)
 		{
@@ -84,7 +84,7 @@ public class GameTime : MonoBehaviour {
 			winningText.color = Color.green;
 			break;
 		case 3: 
-			winningText.text = bestScore + " billion targeted ads sold!";
+			winningText.text = bestScore + " billion\ntargeted ads sold!";
 			winningText.color = Color.magenta;
 			break;
 		}
@@ -93,6 +93,16 @@ public class GameTime : MonoBehaviour {
 		iTween.ColorTo(Game.Instance.winningSprite.gameObject, new Color(1,1,1,1), totalFileDestroyTime);
 		/*iTween.ColorTo(winningText.gameObject, new Color(winningText.color.r,winningText.color.g,winningText.color.b,1), 
 		               totalFileDestroyTime);*/
+
+		Game.Instance.winningSprite.transform.GetChild(0).gameObject.SetActive(true);
+		foreach(Transform tra in Game.Instance.winningSprite.transform.GetChild(0)){
+			tra.gameObject.SetActive(true);
+		}
+
+		ParticleSystem[] ps = Game.Instance.winningSprite.transform.GetComponentsInChildren<ParticleSystem>();
+		foreach(ParticleSystem sys in ps){
+			sys.startColor = winningText.color;
+		}
 
 		yield return new WaitForSeconds(totalFileDestroyTime);
 
