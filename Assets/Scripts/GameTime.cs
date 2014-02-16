@@ -33,7 +33,7 @@ public class GameTime : MonoBehaviour {
 			}
 		}
 
-        if (endedAlready && Input.touchCount > 0)
+        if (timePassed >= (totalTime + totalFileDestroyTime +1.0f) && Input.touchCount > 0)
         {
             for (int i = 0; i < Input.touchCount; i++)
             {
