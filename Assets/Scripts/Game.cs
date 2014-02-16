@@ -8,7 +8,7 @@ public class Game : MonoBehaviour
     public int[] playerScores = { 0, 0, 0, 0 };
     public GUIText[] playerScoreText;
 
-    public Vector2 BoardSize = new Vector2(9, 5);
+	public Vector2 BoardSize = new Vector2(9, 5);
 
     public GameObject corner90prefab;
     public GameObject straightPrefab;
@@ -55,15 +55,11 @@ public class Game : MonoBehaviour
 			break;
 		case State.INGAME:
 			titleMenu.gameObject.SetActive(false);
-			if(winningSprite)
-				winningSprite.SetActive(false);
 			fileSender.sendFiles = true;
 			break;
 		case State.TITLE:
 			titleMenu.gameObject.SetActive(true);
 			titleMenu.gameObject.renderer.material.color = new Color(1,1,1,1);
-			if(winningSprite)
-				winningSprite.SetActive(false);
 			fileSender.sendFiles = false;
 			break;
 		}

@@ -7,6 +7,9 @@ public class GameTime : MonoBehaviour {
 
 	public System.Action OnGameEnded;
 
+	public GameObject fadeTexture;
+	public GUIText winningText;
+
 	private Game game;
 	public float totalTime = 60f;
 	public float timePassed;
@@ -56,14 +59,32 @@ public class GameTime : MonoBehaviour {
 
 		if(OnGameEnded != null) OnGameEnded();
 
-        iTween.CameraFadeAdd();
-        iTween.CameraFadeTo(0.4f, totalFileDestroyTime*0.5f);
+		switch(bestPlayer)
+		{
+		case -1:
+			winningText.text = "no matter who vince...";
+			break;
+		case 0:
+			winningText.text = "no matter who vince...";
+			break;
+		case 1:
+			winningText.text = "no matter who vince...";
+			break;
+		case 2:
+			winningText.text = "no matter who vince...";
+			break;
+		case 3: 
+			winningText.text = "no matter who vince...";
+			break;
+		}
+
+		iTween.ColorTo(fadeTexture, new Color(0,0,0,0.8f), totalFileDestroyTime);
+		iTween.ColorTo(Game.Instance.winningSprite.gameObject, new Color(1,1,1,1), totalFileDestroyTime);
+		iTween.ColorTo(winningText.gameObject, new Color(1,1,1,1), totalFileDestroyTime);
 
 		yield return new WaitForSeconds(totalFileDestroyTime);
 
 		Game.Instance.ChangeState(Game.State.ENDGAME);
-
-		print ("Player " + bestPlayer + " won!");
 
 		yield return new WaitForSeconds(5f);
 
