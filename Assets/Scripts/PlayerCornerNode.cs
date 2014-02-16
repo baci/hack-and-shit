@@ -11,13 +11,13 @@ public class PlayerCornerNode : NetworkNode {
 	public float pointRotationFactor = 50;
 	public float pointScaleFactor = 3;
 
-	Color mOriginalColor;
+	//Color mOriginalColor;
 	public AudioClip comboFx;
 
     protected override void Start()
     {
         base.Start();
-        mOriginalColor = renderer.material.color;
+        //mOriginalColor = renderer.material.color;
     }
 
 	override public void RecieveFile(File aFile, NetworkNode aFromNode)
@@ -123,7 +123,8 @@ public class PlayerCornerNode : NetworkNode {
         iTween.FadeTo(transform.parent.gameObject, args);
 
         args = new Hashtable(){
-				{"color", mOriginalColor},
+				//{"color", mOriginalColor},
+                {"color", Color.white},
 				{"time", 0.7f},
 				{"delay", 0.3f},
 				{"easetype", "easeOutQuad"}
