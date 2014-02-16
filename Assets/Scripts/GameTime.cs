@@ -68,19 +68,19 @@ public class GameTime : MonoBehaviour {
 		switch(bestPlayer)
 		{
 		case -1:
-			winningText.text =  "No monopoly on data was estabilished.";
+			winningText.text =  "No monopoly on data\nwas estabilished.";
 			winningText.color = Color.white;
 			break;
 		case 0:
-			winningText.text = bestScore + " billion lives were analyzed by your algorythms!";
+			winningText.text = bestScore + " billion lives were\nanalyzed by your\nalgorithms!";
 			winningText.color = Color.cyan;
 			break;
 		case 1:
-			winningText.text = "The wereabouts of " + bestScore + " billion people are in your database!";
+			winningText.text = "The wereabouts of\n" + bestScore + " billion people are\nin your database!";
 			winningText.color = Color.yellow;
 			break;
 		case 2:
-			winningText.text = "Over " + bestScore*100 + " embassies were spied upon!";
+			winningText.text = "Over " + bestScore + "00 embassies\nwere spied upon!";
 			winningText.color = Color.green;
 			break;
 		case 3: 
