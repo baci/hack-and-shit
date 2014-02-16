@@ -17,6 +17,10 @@ public class PlayerCornerNode : NetworkNode {
         {
             transform.parent.GetComponent<PlayerCorner>().RemoveScore(10);
             (aFile as Virus).DestroyJuicyVirus();
+
+            curFilesInRow = 0;
+
+            DoVirusEffect();
         }
         else if (aFile.DidPoint == false)
         {
@@ -75,4 +79,23 @@ public class PlayerCornerNode : NetworkNode {
 		yield return new WaitForSeconds(3f);
 		curFilesInRow--;
 	}
+
+
+    private void DoVirusEffect()
+    {
+        iTween.ShakePosition(transform.parent.gameObject, new Vector3(0.2f, 0.2f, 0), 0.5f);
+        var args = new Hashtable(){
+				{"scale", Vector3.one*1.05f},
+				{"time", 0.15f},
+				{"easetype", "easeOutQuad"}
+			};
+        iTween.ScaleTo(transform.parent.gameObject, args);
+        args = new Hashtable(){
+				{"scale", Vector3.one},
+				{"time", 0.15f},
+				{"delay", 0.15f},
+				{"easetype", "easeOutQuad"}
+			};
+        iTween.ScaleTo(transform.parent.gameObject, args);
+    }
 }
