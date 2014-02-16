@@ -11,6 +11,14 @@ public class PlayerCornerNode : NetworkNode {
 	public float pointRotationFactor = 50;
 	public float pointScaleFactor = 3;
 
+    Color mOriginalColor;
+
+    protected override void Start()
+    {
+        base.Start();
+        mOriginalColor = renderer.material.color;
+    }
+
 	override public void RecieveFile(File aFile, NetworkNode aFromNode)
     {
         if (aFile is Virus)
@@ -20,7 +28,7 @@ public class PlayerCornerNode : NetworkNode {
 
             curFilesInRow = 0;
 
-            DoVirusEffect();
+            DoVirusEffect(aFile as Virus);
         }
         else if (aFile.DidPoint == false)
         {
@@ -81,8 +89,14 @@ public class PlayerCornerNode : NetworkNode {
 	}
 
 
-    private void DoVirusEffect()
+    private void DoVirusEffect(Virus aVirus)
     {
+        var particles = aVirus.transform.FindChild("VirusAttack");
+        particles.parent = null;
+        particles.position = aVirus.transform.position;
+        particles.up = Vector3.Normalize(transform.position - particles.position);
+        particles.active = true;
+
         iTween.ShakePosition(transform.parent.gameObject, new Vector3(0.2f, 0.2f, 0), 0.5f);
         var args = new Hashtable(){
 				{"scale", Vector3.one*1.05f},
@@ -97,5 +111,20 @@ public class PlayerCornerNode : NetworkNode {
 				{"easetype", "easeOutQuad"}
 			};
         iTween.ScaleTo(transform.parent.gameObject, args);
+
+        args = new Hashtable(){
+				{"color", Color.red * 0.75f},
+				{"time", 0.3f},
+				{"easetype", "easeOutQuad"}
+			};
+        iTween.FadeTo(transform.parent.gameObject, args);
+
+        args = new Hashtable(){
+				{"color", mOriginalColor},
+				{"time", 0.7f},
+				{"delay", 0.3f},
+				{"easetype", "easeOutQuad"}
+			};
+        iTween.FadeTo(transform.parent.gameObject, args);
     }
 }
