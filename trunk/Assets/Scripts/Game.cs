@@ -18,7 +18,6 @@ public class Game : MonoBehaviour
 	public GameObject winningSprite;
 
 	public FileSender fileSender;
-	public VirusTrigger virusTrigger;
 
 	public enum State
 	{
