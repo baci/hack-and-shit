@@ -100,6 +100,8 @@ public class PlayerCornerNode : NetworkNode {
         particles.up = Vector3.Normalize(transform.position - particles.position);
         particles.active = true;
 
+        AudioController.instance.PlaySfx(aVirus.scoreSfx, 1.0f);
+
         iTween.ShakePosition(transform.parent.gameObject, new Vector3(0.2f, 0.2f, 0), 0.5f);
         var args = new Hashtable(){
 				{"scale", Vector3.one*1.05f},
