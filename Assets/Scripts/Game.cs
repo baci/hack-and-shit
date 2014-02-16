@@ -57,6 +57,7 @@ public class Game : MonoBehaviour
 		case State.INGAME:
 			titleMenu.gameObject.SetActive(false);
 			fileSender.sendFiles = true;
+            foreach (var text in playerScoreText) text.gameObject.SetActive(true);
 			break;
 		case State.TITLE:
 			titleMenu.gameObject.SetActive(true);
