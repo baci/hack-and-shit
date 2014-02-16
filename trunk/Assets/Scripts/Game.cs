@@ -58,7 +58,6 @@ public class Game : MonoBehaviour
 			if(winningSprite)
 				winningSprite.SetActive(false);
 			fileSender.sendFiles = true;
-			virusTrigger.StartTriggering();
 			break;
 		case State.TITLE:
 			titleMenu.gameObject.SetActive(true);
