@@ -6,7 +6,7 @@ public class Game : MonoBehaviour
     public static Game Instance;
 
     public int[] playerScores = { 0, 0, 0, 0 };
-    public GUIText[] playerScoreText;
+    public TextMesh[] playerScoreText;
 
 	public Vector2 BoardSize = new Vector2(9, 5);
 
