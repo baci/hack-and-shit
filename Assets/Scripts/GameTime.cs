@@ -8,7 +8,7 @@ public class GameTime : MonoBehaviour {
 	public System.Action OnGameEnded;
 
 	public GameObject fadeTexture;
-	public GUIText winningText;
+	public TextMesh winningText;
 
 	private Game game;
 	public float totalTime = 60f;
