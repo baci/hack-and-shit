@@ -44,6 +44,8 @@ public class PlayerCornerNode : NetworkNode {
 
 	private IEnumerator DoPointEffect(File file)
 	{
+		curFilesInRow++;
+
 		AudioController.instance.PlaySfx(comboFx);
 
         var args = new Hashtable(){
@@ -59,8 +61,6 @@ public class PlayerCornerNode : NetworkNode {
 				{"easetype", "easeOutQuad"}
 			};
         iTween.ScaleTo(transform.parent.gameObject, args);
-
-		curFilesInRow++;
 
 		transform.parent.GetComponent<PlayerCorner>().AddScore(1);
 		if(curFilesInRow > 3)
@@ -87,14 +87,16 @@ public class PlayerCornerNode : NetworkNode {
 		yield return new WaitForSeconds(pointFlyingSpeed);
 		file.DestroyJuicy(true, curFilesInRow); 
 
-		yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(cooldownTime);
 		curFilesInRow--;
 	}
 
 
     private void DoVirusEffect(Virus aVirus)
     {
-        var particles = aVirus.transform.FindChild("VirusAttack");
+		cooldownTime = 0;
+
+		var particles = aVirus.transform.FindChild("VirusAttack");
         particles.parent = null;
         particles.position = aVirus.transform.position;
         particles.up = Vector3.Normalize(transform.position - particles.position);
