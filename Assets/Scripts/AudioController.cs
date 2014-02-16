@@ -29,6 +29,7 @@ public class AudioController : MonoBehaviour {
 	public void PlaySfx(AudioClip clip, float pitch = 1f){
 		if(clip == null) return;
 		sfxSource.pitch = pitch;
+		sfxSource.volume = 0.7f;
 		sfxSource.PlayOneShot(clip);
 	}
 
