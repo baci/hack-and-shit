@@ -14,7 +14,8 @@ public class Game : MonoBehaviour
     public GameObject straightPrefab;
     public GameObject forkPrefab;
 
-	public GameTitleMenu titleMenu;
+    public GameTitleMenu titleMenu;
+    public CreditsScreen creditsScreen;
 	public GameObject winningSprite;
 
 	public FileSender fileSender;
@@ -23,7 +24,8 @@ public class Game : MonoBehaviour
 	{
 		TITLE,
 		INGAME,
-		ENDGAME
+		ENDGAME,
+        CREDITS,
 	}
 	private State state;
 	public State GameState {get{return state;}}
@@ -59,8 +61,15 @@ public class Game : MonoBehaviour
 		case State.TITLE:
 			titleMenu.gameObject.SetActive(true);
 			titleMenu.gameObject.renderer.material.color = new Color(1,1,1,1);
+            titleMenu.creditsButton.SetActive(true);
+            iTween.ColorTo(titleMenu.creditsButton, new Color(1,1,1,1), 0.5f);
 			fileSender.sendFiles = false;
-			break;
+            break;
+        case State.CREDITS:
+            creditsScreen.gameObject.SetActive(true);
+            creditsScreen.gameObject.renderer.material.color = new Color(1, 1, 1, 1);
+            fileSender.sendFiles = false;
+            break;
 		}
 		state = newState;
 	}
