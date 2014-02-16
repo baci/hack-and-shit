@@ -248,6 +248,9 @@ public class ConnectionNode : NetworkNode
 
     private bool PassThrough_Fork(File aFile, NetworkNode aFromNode)
     {
+        if (aFromNode == null)
+            return true;
+
         if (rotation == 0 && aFromNode != connections[(int)ConnectionDir.up])
             return true;
 

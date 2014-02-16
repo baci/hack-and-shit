@@ -39,10 +39,10 @@ public class Game : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        playerScoreText[0].text = "" + playerScores[0];
-        playerScoreText[1].text = "" + playerScores[1];
-        playerScoreText[2].text = "" + playerScores[2];
-        playerScoreText[3].text = "" + playerScores[3];
+        for (int i = 0; i < playerScoreText.Length; i++)
+        {
+            playerScoreText[i].text = "" + playerScores[i];
+        }
 	}
 
 	public void ChangeState(State newState)
@@ -58,8 +58,10 @@ public class Game : MonoBehaviour
 		case State.TITLE:
 			titleMenu.gameObject.SetActive(true);
             titleMenu.creditsButton.SetActive(true);
+            titleMenu.loadMapButton.SetActive(true);
 			iTween.ColorTo(titleMenu.gameObject, new Color(1,1,1,1), 0.5f);
             iTween.ColorTo(titleMenu.creditsButton, new Color(1,1,1,1), 0.5f);
+            iTween.ColorTo(titleMenu.loadMapButton, new Color(1,1,1,1), 0.5f);
 			fileSender.sendFiles = false;
             break;
         case State.CREDITS:
