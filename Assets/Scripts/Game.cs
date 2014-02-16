@@ -57,8 +57,8 @@ public class Game : MonoBehaviour
 			break;
 		case State.TITLE:
 			titleMenu.gameObject.SetActive(true);
-			titleMenu.gameObject.renderer.material.color = new Color(1,1,1,1);
             titleMenu.creditsButton.SetActive(true);
+			iTween.ColorTo(titleMenu.gameObject, new Color(1,1,1,1), 0.5f);
             iTween.ColorTo(titleMenu.creditsButton, new Color(1,1,1,1), 0.5f);
 			fileSender.sendFiles = false;
             break;
