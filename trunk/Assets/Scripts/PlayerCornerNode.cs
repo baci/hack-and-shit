@@ -11,7 +11,8 @@ public class PlayerCornerNode : NetworkNode {
 	public float pointRotationFactor = 50;
 	public float pointScaleFactor = 3;
 
-    Color mOriginalColor;
+	Color mOriginalColor;
+	public AudioClip comboFx;
 
     protected override void Start()
     {
@@ -43,6 +44,8 @@ public class PlayerCornerNode : NetworkNode {
 
 	private IEnumerator DoPointEffect(File file)
 	{
+		AudioController.instance.PlaySfx(comboFx);
+
         var args = new Hashtable(){
 				{"scale", Vector3.one*1.05f},
 				{"time", 0.15f},

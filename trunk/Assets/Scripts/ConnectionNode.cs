@@ -11,6 +11,8 @@ public class ConnectionNode : NetworkNode
         fork,
     }
 
+	public AudioClip rotateAudio;
+
     public List<NetworkNode> connections = null;
 
     public ConnectionNodeType type;
@@ -122,6 +124,8 @@ public class ConnectionNode : NetworkNode
 				{"easetype", "easeInCubic"}
 			};
 			iTween.ScaleTo(gameObject, args);
+
+			AudioController.instance.PlaySfx(rotateAudio);
 		}
     }
 

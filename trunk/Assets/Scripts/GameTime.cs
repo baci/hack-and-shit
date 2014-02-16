@@ -7,6 +7,8 @@ public class GameTime : MonoBehaviour {
 
 	public System.Action OnGameEnded;
 
+	public AudioClip endGame;
+
 	public GameObject fadeTexture;
 	public TextMesh winningText;
 
@@ -58,6 +60,8 @@ public class GameTime : MonoBehaviour {
 		int bestPlayer = game.GetWinner();
 
 		if(OnGameEnded != null) OnGameEnded();
+
+		AudioController.instance.PlaySfx(endGame);
 
 		switch(bestPlayer)
 		{
