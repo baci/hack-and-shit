@@ -50,12 +50,8 @@ public class Game : MonoBehaviour
 		switch(newState)
 		{
 		case State.ENDGAME:
-			titleMenu.gameObject.SetActive(false);
-			if(winningSprite)
-				winningSprite.SetActive(true);
 			break;
 		case State.INGAME:
-			titleMenu.gameObject.SetActive(false);
 			fileSender.sendFiles = true;
             foreach (var text in playerScoreText) text.gameObject.SetActive(true);
 			break;
