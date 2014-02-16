@@ -63,35 +63,40 @@ public class GameTime : MonoBehaviour {
 
 		AudioController.instance.PlaySfx(endGame);
 
+		int bestScore = Game.Instance.playerScores[bestPlayer];
+
 		switch(bestPlayer)
 		{
 		case -1:
-			winningText.text = "no matter who vince...";
+			winningText.text =  "No monopoly on data was estabilished.";
 			winningText.color = Color.white;
 			break;
 		case 0:
-			winningText.text = "Google wins!";
-			winningText.color = Color.magenta;
-			break;
-		case 1:
-			winningText.text = "NSA wins!";
-			winningText.color = Color.green;
-			break;
-		case 2:
-			winningText.text = "Facebook wins!";
+			winningText.text = bestScore + " billion lives were analyzed by your algorythms!";
 			winningText.color = Color.cyan;
 			break;
-		case 3: 
-			winningText.text = "Microsoft wins!";
+		case 1:
+			winningText.text = "The wereabouts of " + bestScore + " billion people are in your database!";
 			winningText.color = Color.yellow;
 			break;
+		case 2:
+			winningText.text = "Over " + bestScore*100 + " embassies were spied upon!";
+			winningText.color = Color.green;
+			break;
+		case 3: 
+			winningText.text = bestScore + " billion targeted ads sold!";
+			winningText.color = Color.magenta;
+			break;
 		}
-
+		winningText.color = new Color(winningText.color.r,winningText.color.g,winningText.color.b,0);
 		iTween.ColorTo(fadeTexture, new Color(0,0,0,0.8f), totalFileDestroyTime);
 		iTween.ColorTo(Game.Instance.winningSprite.gameObject, new Color(1,1,1,1), totalFileDestroyTime);
-		//iTween.ColorTo(winningText.gameObject, new Color(1,1,1,1), totalFileDestroyTime);
+		/*iTween.ColorTo(winningText.gameObject, new Color(winningText.color.r,winningText.color.g,winningText.color.b,1), 
+		               totalFileDestroyTime);*/
 
 		yield return new WaitForSeconds(totalFileDestroyTime);
+
+		winningText.color = new Color(winningText.color.r,winningText.color.g,winningText.color.b,1);
 
 		Game.Instance.ChangeState(Game.State.ENDGAME);
 
