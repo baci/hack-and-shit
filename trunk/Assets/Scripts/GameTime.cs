@@ -63,24 +63,29 @@ public class GameTime : MonoBehaviour {
 		{
 		case -1:
 			winningText.text = "no matter who vince...";
+			winningText.color = Color.white;
 			break;
 		case 0:
-			winningText.text = "no matter who vince...";
+			winningText.text = "Google wins!";
+			winningText.color = Color.magenta;
 			break;
 		case 1:
-			winningText.text = "no matter who vince...";
+			winningText.text = "NSA wins!";
+			winningText.color = Color.green;
 			break;
 		case 2:
-			winningText.text = "no matter who vince...";
+			winningText.text = "Facebook wins!";
+			winningText.color = Color.cyan;
 			break;
 		case 3: 
-			winningText.text = "no matter who vince...";
+			winningText.text = "Microsoft wins!";
+			winningText.color = Color.yellow;
 			break;
 		}
 
 		iTween.ColorTo(fadeTexture, new Color(0,0,0,0.8f), totalFileDestroyTime);
 		iTween.ColorTo(Game.Instance.winningSprite.gameObject, new Color(1,1,1,1), totalFileDestroyTime);
-		iTween.ColorTo(winningText.gameObject, new Color(1,1,1,1), totalFileDestroyTime);
+		//iTween.ColorTo(winningText.gameObject, new Color(1,1,1,1), totalFileDestroyTime);
 
 		yield return new WaitForSeconds(totalFileDestroyTime);
 
