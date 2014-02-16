@@ -8,7 +8,8 @@ public class FileSender : MonoBehaviour
 
     public List<NetworkNode> connections;
 
-    float mFileSendTime = 1.0f;
+    public float fileSentInterval=1;
+    float mFileSendTime = 1;
 
 	public bool sendFiles = true; 
 
@@ -35,10 +36,13 @@ public class FileSender : MonoBehaviour
 
         if (mFileSendTime <= 0)
         {
-            GameObject file = Instantiate(filePrefab) as GameObject;
-            file.GetComponent<File>().Target = connections[Random.Range(0, connections.Count)];
-            file.transform.position = transform.position;
-            mFileSendTime = 0.5f;
+            for (int i = 0; i < connections.Count; i++)
+            {
+                GameObject file = Instantiate(filePrefab) as GameObject;
+                file.GetComponent<File>().Target = connections[i];
+                file.transform.position = transform.position;
+                mFileSendTime = fileSentInterval;
+            }
         }
 	}
 }

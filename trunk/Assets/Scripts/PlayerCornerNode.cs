@@ -13,24 +13,38 @@ public class PlayerCornerNode : NetworkNode {
 
 	override public void RecieveFile(File aFile, NetworkNode aFromNode)
     {
+        if (aFile is Virus)
+        {
+            transform.parent.GetComponent<PlayerCorner>().RemoveScore(10);
+            (aFile as Virus).DestroyJuicyVirus();
+        }
+        else if (aFile.DidPoint == false)
+        {
+            aFile.DidPoint = true;
+            StartCoroutine(DoPointEffect(aFile));
+        }
     }
 
     override public void HandleFile(File aFile, NetworkNode aFromNode)
     {
-        if(aFile is Virus)
-		{
-			transform.parent.GetComponent<PlayerCorner>().RemoveScore(10);
-			(aFile as Virus).DestroyJuicyVirus();
-		}
-		else if (aFile.DidPoint == false)
-		{
-			aFile.DidPoint = true;
-			StartCoroutine(DoPointEffect(aFile));
-		}
     }
 
 	private IEnumerator DoPointEffect(File file)
 	{
+        var args = new Hashtable(){
+				{"scale", Vector3.one*1.05f},
+				{"time", 0.15f},
+				{"easetype", "easeOutQuad"}
+			};
+        iTween.ScaleTo(transform.parent.gameObject, args);
+        args = new Hashtable(){
+				{"scale", Vector3.one},
+				{"time", 0.15f},
+				{"delay", 0.15f},
+				{"easetype", "easeOutQuad"}
+			};
+        iTween.ScaleTo(transform.parent.gameObject, args);
+
 		curFilesInRow++;
 
 		transform.parent.GetComponent<PlayerCorner>().AddScore(1);
